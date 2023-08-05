@@ -1,6 +1,11 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
-  background: linear-gradient(90deg, rgba(191,10,131,1) 0%, rgba(43,201,217,1) 100%);
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', monospace;
+    background: linear-gradient(90deg, rgba(191, 10, 131, 1) 0%, rgba(43, 201, 217, 1) 100%);
+
+}
+
+button {
+    cursor: pointer;
 }
