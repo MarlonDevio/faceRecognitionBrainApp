@@ -1,6 +1,6 @@
 import { particlesInit, particlesLoaded } from "./assets/particles/Particles";
 import { particleOptions } from "./assets/particles/ParticleOptions";
-import { useCallback } from "react";
+import { useState, useCallback } from "react";
 import Particles from "react-tsparticles";
 import "./App.css";
 import Navigation from "./components/Navigation/Navigation";
@@ -11,6 +11,13 @@ import Rank from "./components/Rank/Rank";
 function App() {
   const particlesInitMemoized = useCallback(particlesInit, []);
   const particlesLoadedMemoized = useCallback(particlesLoaded, []);
+
+  const [input, setInput] = useState("");
+
+  const onInputChange = (ev) => {
+    console.log(ev.target.value);
+    setInput(ev.target.value);
+  };
 
   return (
     <div className="App">
@@ -24,7 +31,7 @@ function App() {
       <Navigation />
       <Logo />
       <Rank />
-      <ImageLinkForm />
+      <ImageLinkForm input={input} onChange={onInputChange} />
       {/*	<FaceRecognition />}*/}
     </div>
   );
