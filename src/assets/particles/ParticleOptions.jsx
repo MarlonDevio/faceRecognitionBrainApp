@@ -31,7 +31,7 @@ export const particleOptions = {
       distance: 300,
       enable: true,
       opacity: 0.5,
-      width: 1,
+      width: 0.3,
     },
     move: {
       direction: "none",
@@ -40,15 +40,15 @@ export const particleOptions = {
         default: "bounce",
       },
       random: false,
-      speed: 2,
+      speed: 1,
       straight: false,
     },
     number: {
       density: {
         enable: true,
-        area: 800,
+        area: 1000,
       },
-      value: 50,
+      value: 100,
     },
     opacity: {
       value: 0.5,

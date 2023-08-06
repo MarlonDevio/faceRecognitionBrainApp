@@ -13,10 +13,15 @@ function App() {
   const particlesLoadedMemoized = useCallback(particlesLoaded, []);
 
   const [input, setInput] = useState("");
+  console.log(useState());
 
   const onInputChange = (ev) => {
     console.log(ev.target.value);
     setInput(ev.target.value);
+  };
+
+  const onButtonSubmit = () => {
+    console.log("click");
   };
 
   return (
@@ -31,7 +36,11 @@ function App() {
       <Navigation />
       <Logo />
       <Rank />
-      <ImageLinkForm input={input} onChange={onInputChange} />
+      <ImageLinkForm
+        input={input}
+        onChange={onInputChange}
+        submit={onButtonSubmit}
+      />
       {/*	<FaceRecognition />}*/}
     </div>
   );
