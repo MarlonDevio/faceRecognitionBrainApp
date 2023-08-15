@@ -1,28 +1,38 @@
-import { particlesInit, particlesLoaded } from "./assets/particles/Particles";
-import { particleOptions } from "./assets/particles/ParticleOptions";
-import { useState, useCallback } from "react";
-import Particles from "react-tsparticles";
-import "./App.css";
-import Navigation from "./components/Navigation/Navigation";
-import Logo from "./components/Logo/Logo";
-import ImageLinkForm from "./components/ImagelinkForm/ImageLinkForm";
-import Rank from "./components/Rank/Rank";
+import { particlesInit, particlesLoaded } from './assets/particles/Particles';
+import { particleOptions } from './assets/particles/ParticleOptions';
+import { useCallback, useEffect, useState } from 'react';
+import Particles from 'react-tsparticles';
+import './App.css';
+import Navigation from './components/Navigation/Navigation';
+import Logo from './components/Logo/Logo';
+import ImageLinkForm from './components/ImagelinkForm/ImageLinkForm';
+import Rank from './components/Rank/Rank';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition.jsx';
+import { loadFaceRecognition } from './assets/clarifai/Clarifai.js';
 
+// https://samples.clarifai.com/metro-north.jpg
 function App() {
   const particlesInitMemoized = useCallback(particlesInit, []);
   const particlesLoadedMemoized = useCallback(particlesLoaded, []);
 
   const [input, setInput] = useState("");
-  console.log(useState());
+  const [imageURL, setImageURL] = useState("");
 
   const onInputChange = (ev) => {
-    console.log(ev.target.value);
     setInput(ev.target.value);
   };
 
   const onButtonSubmit = () => {
-    console.log("click");
+    setImageURL(input);
+    setInput("");
+    // getData(input.trim());
   };
+
+  useEffect(() => {
+    if (imageURL) {
+      loadFaceRecognition(imageURL.trim());
+    }
+  }, [imageURL]);
 
   return (
     <div className="App">
@@ -38,10 +48,10 @@ function App() {
       <Rank />
       <ImageLinkForm
         input={input}
-        onChange={onInputChange}
-        submit={onButtonSubmit}
+        onInputChange={onInputChange}
+        onButtonSubmit={onButtonSubmit}
       />
-      {/*	<FaceRecognition />}*/}
+      <FaceRecognition imageURL={imageURL} />
     </div>
   );
 }
