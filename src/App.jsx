@@ -17,6 +17,7 @@ function App() {
 
   const [input, setInput] = useState("");
   const [imageURL, setImageURL] = useState("");
+  const [box, setBox] = useState();
 
   const onInputChange = (ev) => {
     setInput(ev.target.value);

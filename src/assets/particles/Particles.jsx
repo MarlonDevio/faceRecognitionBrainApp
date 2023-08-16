@@ -4,6 +4,4 @@ export async function particlesInit(engine) {
   await loadSlim(engine);
 }
 
-export async function particlesLoaded(container) {
-  console.log(container);
-}
+export async function particlesLoaded(container) {}

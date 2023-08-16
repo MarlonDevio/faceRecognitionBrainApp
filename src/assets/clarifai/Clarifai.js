@@ -68,9 +68,24 @@ export const loadFaceRecognition = async (url) => {
       };
     });
     console.log(regionBoxes);
+    console.log(calculateFaceLocation(regionBoxes));
   } catch (err) {
     throw err;
   }
+};
+
+const calculateFaceLocation = (data) => {
+  const clarifaiFace = data;
+  const image = document.getElementById("inputimage");
+  const width = Number(image.width);
+  const height = Number(image.height);
+
+  return {
+    leftCol: clarifaiFace[0].left * width,
+    topRow: clarifaiFace[0].top * height,
+    rightCol: width - clarifaiFace[0].right * width,
+    bottomRow: height - clarifaiFace[0].bottom * height,
+  };
 };
 
 /*** DESTRUCTURING ***/
