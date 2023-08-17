@@ -1,15 +1,20 @@
 // Importing necessary modules and components
-import { particlesInit, particlesLoaded } from "./assets/particles/Particles";
-import { particleOptions } from "./assets/particles/ParticleOptions";
+import {
+  particlesInit,
+  particlesLoaded,
+} from "./components/particles/Particles";
+import { particleOptions } from "./components/particles/ParticleOptions";
 import { useCallback, useEffect, useState } from "react";
 import Particles from "react-tsparticles";
-import "./App.css";
 import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
 import ImageLinkForm from "./components/ImagelinkForm/ImageLinkForm";
 import Rank from "./components/Rank/Rank";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition.jsx";
 import { loadFaceRecognition } from "./assets/clarifai/Clarifai.js";
+import Signin from "./components/Signin/Signin.jsx";
+import "./App.css";
+import Register from "./components/Register/Register.jsx";
 
 function App() {
   // Using useCallback to memoize the particles' initialization and loading functions.
@@ -21,6 +26,8 @@ function App() {
   const [input, setInput] = useState(""); // For the image URL input
   const [imageURL, setImageURL] = useState(""); // The URL to display and analyze
   const [box, setBox] = useState({}); // The data for face's bounding box
+  const [route, setRoute] = useState("signin");
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   // Event handler for changes in the input field
   const onInputChange = (ev) => {
@@ -61,6 +68,15 @@ function App() {
     }
   }, [imageURL]);
 
+  const onRouteChange = (route) => {
+    if (route === "signout") {
+      setIsSignedIn(false);
+    } else if (route === "home") {
+      setIsSignedIn(true);
+    }
+    setRoute(route);
+  };
+
   // Rendering the components for the app
   return (
     <div className="App">
@@ -71,15 +87,23 @@ function App() {
         loaded={particlesLoadedMemoized}
         options={particleOptions}
       />
-      <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm
-        input={input}
-        onInputChange={onInputChange}
-        onButtonSubmit={onButtonSubmit}
-      />
-      <FaceRecognition imageURL={imageURL} box={box} />
+      <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
+      {route === "home" ? (
+        <>
+          <Logo />
+          <Rank />
+          <ImageLinkForm
+            input={input}
+            onInputChange={onInputChange}
+            onButtonSubmit={onButtonSubmit}
+          />
+          <FaceRecognition imageURL={imageURL} box={box} />;
+        </>
+      ) : route === "signin" ? (
+        <Signin onRouteChange={onRouteChange} />
+      ) : (
+        <Register onRouteChange={onRouteChange} />
+      )}
     </div>
   );
 }
